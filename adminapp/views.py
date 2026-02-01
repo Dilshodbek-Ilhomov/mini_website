@@ -32,10 +32,12 @@ def login_page(request):
 def home_page(request):
     faculties = services.get_faculties()
     kafedras = services.get_kafedra()
+    subject = services.get_subject()
     ctx = {
         'counts': {
             'faculties': len(faculties),
             'kafedras': len(kafedras),
+            'subject': len(subject),
         }
     }
     return render(request, 'index.html', ctx)
@@ -127,3 +129,46 @@ def kafedra_list(request):
         "kafedras": kafedras
     }
     return render(request, 'kafedra/list.html', ctx)
+
+# Subjects
+@login_required_decorator
+def subject_create(request):
+    model = Subject()
+    form = SubjectForm(request.POST or None, instance=model)
+    if request.POST and form.is_valid():
+        form.save()
+        return redirect('subject_list')
+    ctx = {
+        "form": form
+    }
+    return render(request, 'Subject/form.html', ctx)
+
+
+@login_required_decorator
+def subject_edit(request, pk):
+    model = Subject.objects.get(pk=pk)
+    form = SubjectForm(request.POST or None, instance=model)
+    if request.POST and form.is_valid():
+        form.save()
+        return redirect('subject_list')
+    ctx = {
+        "model": model,
+        "form": form
+    }
+    return render(request, 'Subject/form.html', ctx)
+
+
+@login_required_decorator
+def subject_delete(request, pk):
+    model = Subject.objects.get(pk=pk)
+    model.delete()
+    return redirect('subject_list')
+
+
+@login_required_decorator
+def subject_list(request):
+    subject = services.get_subject()
+    ctx = {
+        "subject": subject
+    }
+    return render(request, 'Subject/list.html', ctx)

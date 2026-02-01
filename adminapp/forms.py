@@ -18,3 +18,11 @@ class KafedraForm(forms.ModelForm):
         widgets = {
             "name": forms.TextInput(attrs={'class': 'form-control'})
         }
+
+class SubjectForm(forms.ModelForm):
+    class Meta:
+        model = Subject
+        fields = "__all__"
+        widgets = {
+            "name": forms.TextInput(attrs={'class': 'form-control'})
+        }
