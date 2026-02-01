@@ -35,3 +35,21 @@ def get_subject():
         cursor.execute("""SELECT * FROM adminapp_subject""")
         subject = dictfetchall(cursor)
         return subject
+
+def get_teachers():
+    with closing(connection.cursor()) as cursor:
+        cursor.execute("""SELECT * FROM adminapp_teachers""")
+        teachers = dictfetchall(cursor)
+        return teachers
+
+def get_groups():
+    with closing(connection.cursor()) as cursor:
+        cursor.execute("""SELECT * FROM adminapp_groups""")
+        groups = dictfetchall(cursor)
+        return groups
+
+def get_users():
+    with closing(connection.cursor()) as cursor:
+        cursor.execute("""SELECT * FROM adminapp_users""")
+        users = dictfetchall(cursor)
+        return users

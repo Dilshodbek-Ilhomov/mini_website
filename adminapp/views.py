@@ -33,16 +33,23 @@ def home_page(request):
     faculties = services.get_faculties()
     kafedras = services.get_kafedra()
     subject = services.get_subject()
+    teachers = services.get_teachers()
+    groups = services.get_groups()
+    users = services.get_users()
     ctx = {
         'counts': {
             'faculties': len(faculties),
             'kafedras': len(kafedras),
             'subject': len(subject),
+            'teachers': len(teachers),
+            'groups': len(groups),
+            'users': len(users),
         }
     }
     return render(request, 'index.html', ctx)
 
 
+# Faculty
 @login_required_decorator
 def faculty_create(request):
     model = Faculty()
@@ -172,3 +179,135 @@ def subject_list(request):
         "subject": subject
     }
     return render(request, 'Subject/list.html', ctx)
+
+
+# Teacher
+@login_required_decorator
+def teachers_create(request):
+    model = Teachers()
+    form = TeachersForm(request.POST or None, instance=model)
+    if request.POST and form.is_valid():
+        form.save()
+        return redirect('teachers_list')
+    ctx = {
+        "form": form
+    }
+    return render(request, 'teachers/form.html', ctx)
+
+
+@login_required_decorator
+def teachers_edit(request, pk):
+    model = Teachers.objects.get(pk=pk)
+    form = TeachersForm(request.POST or None, instance=model)
+    if request.POST and form.is_valid():
+        form.save()
+        return redirect('teachers_list')
+    ctx = {
+        "model": model,
+        "form": form
+    }
+    return render(request, 'teachers/form.html', ctx)
+
+
+@login_required_decorator
+def teachers_delete(request, pk):
+    model = Teachers.objects.get(pk=pk)
+    model.delete()
+    return redirect('teachers_list')
+
+
+@login_required_decorator
+def teachers_list(request):
+    teachers = services.get_teachers()
+    ctx = {
+        "teachers": teachers
+    }
+    return render(request, 'teachers/list.html', ctx)
+
+
+# Groups
+@login_required_decorator
+def groups_create(request):
+    model = Groups()
+    form = GroupsForm(request.POST or None, instance=model)
+    if request.POST and form.is_valid():
+        form.save()
+        return redirect('groups_list')
+    ctx = {
+        "form": form
+    }
+    return render(request, 'groups/form.html', ctx)
+
+
+@login_required_decorator
+def groups_edit(request, pk):
+    model = Groups.objects.get(pk=pk)
+    form = GroupsForm(request.POST or None, instance=model)
+    if request.POST and form.is_valid():
+        form.save()
+        return redirect('groups_list')
+    ctx = {
+        "model": model,
+        "form": form
+    }
+    return render(request, 'groups/form.html', ctx)
+
+
+@login_required_decorator
+def groups_delete(request, pk):
+    model = Groups.objects.get(pk=pk)
+    model.delete()
+    return redirect('groups_list')
+
+
+@login_required_decorator
+def groups_list(request):
+    groups = services.get_groups()
+    ctx = {
+        "groups": groups
+    }
+    return render(request, 'groups/list.html', ctx)
+
+
+# Users
+@login_required_decorator
+def users_create(request):
+    model = Users()
+    form = UsersForm(request.POST or None, instance=model)
+    if request.POST and form.is_valid():
+        form.save()
+        return redirect('users_list')
+    ctx = {
+        "form": form
+    }
+    return render(request, 'users/form.html', ctx)
+
+
+@login_required_decorator
+def users_edit(request, pk):
+    model = Users.objects.get(pk=pk)
+    form = GroupsForm(request.POST or None, instance=model)
+    if request.POST and form.is_valid():
+        form.save()
+        return redirect('users_list')
+    ctx = {
+        "model": model,
+        "form": form
+    }
+    return render(request, 'users/form.html', ctx)
+
+
+@login_required_decorator
+def users_delete(request, pk):
+    model = Users.objects.get(pk=pk)
+    model.delete()
+    return redirect('users_list')
+
+
+@login_required_decorator
+def users_list(request):
+    users = services.get_users()
+    ctx = {
+        "users": users
+    }
+    return render(request, 'users/list.html', ctx)

@@ -26,3 +26,29 @@ class SubjectForm(forms.ModelForm):
         widgets = {
             "name": forms.TextInput(attrs={'class': 'form-control'})
         }
+
+class TeachersForm(forms.ModelForm):
+    class Meta:
+        model = Teachers
+        fields = "__all__"
+        widgets = {
+            "name": forms.TextInput(attrs={'class': 'form-control'})
+        }
+
+class GroupsForm(forms.ModelForm):
+    class Meta:
+        model = Groups
+        fields = "__all__"
+        widgets = {
+            "name": forms.TextInput(attrs={'class': 'form-control'})
+        }
+
+class UsersForm(forms.ModelForm):
+    class Meta:
+        model = Users
+        fields = "__all__"
+        widgets = {
+            "name": forms.TextInput(attrs={'class': 'form-control'})
+        }
+
+
